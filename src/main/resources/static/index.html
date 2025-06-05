@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automobile Stock Management</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Automobile Stock Management</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" data-page="vehicles">Vehicles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="orders">Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="maintenance">Maintenance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" data-page="users">Users</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div id="main-content">
+            <!-- Content will be loaded here dynamically -->
+            <div id="vehicles-content" class="content-page active">
+                <h2>Vehicle Inventory</h2>
+                <div class="d-flex justify-content-between mb-3">
+                    <div>
+                        <button class="btn btn-primary" id="add-vehicle-btn">Add New Vehicle</button>
+                    </div>
+                    <div class="d-flex">
+                        <input type="text" class="form-control me-2" id="search-vehicle" placeholder="Search vehicles...">
+                        <button class="btn btn-outline-primary" id="search-btn">Search</button>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <select class="form-select" id="filter-make">
+                            <option value="">Filter by Make</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="filter-fuel-type">
+                            <option value="">Filter by Fuel Type</option>
+                            <option value="PETROL">Petrol</option>
+                            <option value="DIESEL">Diesel</option>
+                            <option value="ELECTRIC">Electric</option>
+                            <option value="HYBRID">Hybrid</option>
+                            <option value="LPG">LPG</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="filter-transmission">
+                            <option value="">Filter by Transmission</option>
+                            <option value="MANUAL">Manual</option>
+                            <option value="AUTOMATIC">Automatic</option>
+                            <option value="SEMI_AUTOMATIC">Semi-Automatic</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="filter-availability">
+                            <option value="">Filter by Availability</option>
+                            <option value="true">Available</option>
+                            <option value="false">Sold</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Make & Model</th>
+                                <th>Year</th>
+                                <th>VIN</th>
+                                <th>Color</th>
+                                <th>Price</th>
+                                <th>Mileage</th>
+                                <th>Fuel Type</th>
+                                <th>Transmission</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vehicles-table-body">
+                            <!-- Vehicle data will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="orders-content" class="content-page">
+                <h2>Orders</h2>
+                <!-- Orders content will be added here -->
+                <div class="d-flex justify-content-between mb-3">
+                    <div>
+                        <button class="btn btn-primary" id="create-order-btn">Create New Order</button>
+                    </div>
+                    <div class="d-flex">
+                        <select class="form-select me-2" id="filter-order-status">
+                            <option value="">All Statuses</option>
+                            <option value="PENDING">Pending</option>
+                            <option value="CONFIRMED">Confirmed</option>
+                            <option value="DELIVERED">Delivered</option>
+                            <option value="CANCELLED">Cancelled</option>
+                        </select>
+                        <button class="btn btn-outline-primary" id="filter-orders-btn">Filter</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Order Number</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Total Amount</th>
+                                <th>Payment Method</th>
+                                <th>Delivery Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-table-body">
+                            <!-- Order data will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="maintenance-content" class="content-page">
+                <h2>Maintenance Records</h2>
+                <!-- Maintenance content will be added here -->
+                <div class="d-flex justify-content-between mb-3">
+                    <div>
+                        <button class="btn btn-primary" id="add-maintenance-btn">Add Maintenance Record</button>
+                    </div>
+                    <div class="d-flex">
+                        <select class="form-select me-2" id="filter-maintenance-status">
+                            <option value="">All Statuses</option>
+                            <option value="SCHEDULED">Scheduled</option>
+                            <option value="IN_PROGRESS">In Progress</option>
+                            <option value="COMPLETED">Completed</option>
+                            <option value="CANCELLED">Cancelled</option>
+                        </select>
+                        <button class="btn btn-outline-primary" id="upcoming-maintenance-btn">Show Upcoming</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Vehicle</th>
+                                <th>Maintenance Type</th>
+                                <th>Service Date</th>
+                                <th>Next Service</th>
+                                <th>Cost</th>
+                                <th>Service Provider</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="maintenance-table-body">
+                            <!-- Maintenance data will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="users-content" class="content-page">
+                <h2>User Management</h2>
+                <!-- Users content will be added here -->
+                <div class="d-flex justify-content-between mb-3">
+                    <div>
+                        <button class="btn btn-primary" id="add-user-btn">Add New User</button>
+                    </div>
+                    <div class="d-flex">
+                        <select class="form-select me-2" id="filter-user-role">
+                            <option value="">All Roles</option>
+                            <option value="ADMIN">Admin</option>
+                            <option value="MANAGER">Manager</option>
+                            <option value="SALESPERSON">Salesperson</option>
+                            <option value="CUSTOMER">Customer</option>
+                        </select>
+                        <button class="btn btn-outline-primary" id="filter-users-btn">Filter</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Role</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <!-- User data will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Vehicle Modal -->
+    <div class="modal fade" id="addVehicleModal" tabindex="-1" aria-labelledby="addVehicleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addVehicleModalLabel">Add New Vehicle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addVehicleForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="make" class="form-label">Make</label>
+                                <input type="text" class="form-control" id="make" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="model" class="form-label">Model</label>
+                                <input type="text" class="form-control" id="model" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="year" class="form-label">Year</label>
+                                <input type="number" class="form-control" id="year" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="vin" class="form-label">VIN</label>
+                                <input type="text" class="form-control" id="vin" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="color" class="form-label">Color</label>
+                                <input type="text" class="form-control" id="color" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="price" class="form-label">Price</label>
+                                <input type="number" class="form-control" id="price" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="mileage" class="form-label">Mileage</label>
+                                <input type="number" class="form-control" id="mileage" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fuelType" class="form-label">Fuel Type</label>
+                                <select class="form-select" id="fuelType" required>
+                                    <option value="">Select Fuel Type</option>
+                                    <option value="PETROL">Petrol</option>
+                                    <option value="DIESEL">Diesel</option>
+                                    <option value="ELECTRIC">Electric</option>
+                                    <option value="HYBRID">Hybrid</option>
+                                    <option value="LPG">LPG</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="transmissionType" class="form-label">Transmission Type</label>
+                                <select class="form-select" id="transmissionType" required>
+                                    <option value="">Select Transmission</option>
+                                    <option value="MANUAL">Manual</option>
+                                    <option value="AUTOMATIC">Automatic</option>
+                                    <option value="SEMI_AUTOMATIC">Semi-Automatic</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="available" class="form-label">Availability</label>
+                                <select class="form-select" id="available" required>
+                                    <option value="true">Available</option>
+                                    <option value="false">Sold</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="engineSize" class="form-label">Engine Size</label>
+                                <input type="text" class="form-control" id="engineSize" value="2.0L" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="acquisitionDate" class="form-label">Acquisition Date</label>
+                                <input type="date" class="form-control" id="acquisitionDate" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="imageUrl" class="form-label">Image URL</label>
+                                <input type="url" class="form-control" id="imageUrl">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveVehicleBtn">Save Vehicle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Vehicle Modal -->
+    <div class="modal fade" id="editVehicleModal" tabindex="-1" aria-labelledby="editVehicleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editVehicleModalLabel">Edit Vehicle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editVehicleForm">
+                        <input type="hidden" id="edit-vehicle-id">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="edit-make" class="form-label">Make</label>
+                                <input type="text" class="form-control" id="edit-make" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="edit-model" class="form-label">Model</label>
+                                <input type="text" class="form-control" id="edit-model" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="edit-year" class="form-label">Year</label>
+                                <input type="number" class="form-control" id="edit-year" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="edit-vin" class="form-label">VIN</label>
+                                <input type="text" class="form-control" id="edit-vin" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="edit-color" class="form-label">Color</label>
+                                <input type="text" class="form-control" id="edit-color" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="edit-price" class="form-label">Price</label>
+                                <input type="number" class="form-control" id="edit-price" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="edit-mileage" class="form-label">Mileage</label>
+                                <input type="number" class="form-control" id="edit-mileage" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="edit-fuelType" class="form-label">Fuel Type</label>
+                                <select class="form-select" id="edit-fuelType" required>
+                                    <option value="">Select Fuel Type</option>
+                                    <option value="PETROL">Petrol</option>
+                                    <option value="DIESEL">Diesel</option>
+                                    <option value="ELECTRIC">Electric</option>
+                                    <option value="HYBRID">Hybrid</option>
+                                    <option value="LPG">LPG</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="edit-transmissionType" class="form-label">Transmission Type</label>
+                                <select class="form-select" id="edit-transmissionType" required>
+                                    <option value="">Select Transmission</option>
+                                    <option value="MANUAL">Manual</option>
+                                    <option value="AUTOMATIC">Automatic</option>
+                                    <option value="SEMI_AUTOMATIC">Semi-Automatic</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="edit-available" class="form-label">Availability</label>
+                                <select class="form-select" id="edit-available" required>
+                                    <option value="true">Available</option>
+                                    <option value="false">Sold</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="edit-engineSize" class="form-label">Engine Size</label>
+                                <input type="text" class="form-control" id="edit-engineSize" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="edit-acquisitionDate" class="form-label">Acquisition Date</label>
+                                <input type="date" class="form-control" id="edit-acquisitionDate" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="edit-description" class="form-label">Description</label>
+                                <textarea class="form-control" id="edit-description" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="edit-imageUrl" class="form-label">Image URL</label>
+                                <input type="url" class="form-control" id="edit-imageUrl">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="updateVehicleBtn">Update Vehicle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Order Modal -->
+    <div class="modal fade" id="addOrderModal" tabindex="-1" aria-labelledby="addOrderModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addOrderModalLabel">Create New Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addOrderForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="orderVehicle" class="form-label">Vehicle</label>
+                                <select class="form-select" id="orderVehicle" required>
+                                    <option value="">Select Vehicle</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="orderCustomer" class="form-label">Customer</label>
+                                <select class="form-select" id="orderCustomer" required>
+                                    <option value="">Select Customer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="orderDate" class="form-label">Order Date</label>
+                                <input type="date" class="form-control" id="orderDate" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="deliveryDate" class="form-label">Delivery Date</label>
+                                <input type="date" class="form-control" id="deliveryDate" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="paymentMethod" class="form-label">Payment Method</label>
+                                <select class="form-select" id="paymentMethod" required>
+                                    <option value="">Select Payment Method</option>
+                                    <option value="CASH">Cash</option>
+                                    <option value="CREDIT_CARD">Credit Card</option>
+                                    <option value="BANK_TRANSFER">Bank Transfer</option>
+                                    <option value="FINANCING">Financing</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="orderStatus" class="form-label">Status</label>
+                                <select class="form-select" id="orderStatus" required>
+                                    <option value="PENDING">Pending</option>
+                                    <option value="CONFIRMED">Confirmed</option>
+                                    <option value="DELIVERED">Delivered</option>
+                                    <option value="CANCELLED">Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveOrderBtn">Save Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Order Modal -->
+    <div class="modal fade" id="editOrderModal" tabindex="-1" aria-labelledby="editOrderModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editOrderModalLabel">Edit Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editOrderForm">
+                        <input type="hidden" id="edit-order-id">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="edit-orderVehicle" class="form-label">Vehicle</label>
+                                <select class="form-select" id="edit-orderVehicle" required>
+                                    <option value="">Select Vehicle</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="edit-orderCustomer" class="form-label">Customer</label>
+                                <select class="form-select" id="edit-orderCustomer" required>
+                                    <option value="">Select Customer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="edit-orderDate" class="form-label">Order Date</label>
+                                <input type="date" class="form-control" id="edit-orderDate" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="edit-deliveryDate" class="form-label">Delivery Date</label>
+                                <input type="date" class="form-control" id="edit-deliveryDate" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="edit-paymentMethod" class="form-label">Payment Method</label>
+                                <select class="form-select" id="edit-paymentMethod" required>
+                                    <option value="">Select Payment Method</option>
+                                    <option value="CASH">Cash</option>
+                                    <option value="CREDIT_CARD">Credit Card</option>
+                                    <option value="BANK_TRANSFER">Bank Transfer</option>
+                                    <option value="FINANCING">Financing</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="edit-orderStatus" class="form-label">Status</label>
+                                <select class="form-select" id="edit-orderStatus" required>
+                                    <option value="PENDING">Pending</option>
+                                    <option value="CONFIRMED">Confirmed</option>
+                                    <option value="DELIVERED">Delivered</option>
+                                    <option value="CANCELLED">Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="updateOrderBtn">Update Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Maintenance Modal -->
+    <div class="modal fade" id="addMaintenanceModal" tabindex="-1" aria-labelledby="addMaintenanceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addMaintenanceModalLabel">Add Maintenance Record</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addMaintenanceForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="maintenanceVehicle" class="form-label">Vehicle</label>
+                                <select class="form-select" id="maintenanceVehicle" required>
+                                    <option value="">Select Vehicle</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="maintenanceType" class="form-label">Maintenance Type</label>
+                                <select class="form-select" id="maintenanceType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="ROUTINE">Routine Service</option>
+                                    <option value="REPAIR">Repair</option>
+                                    <option value="INSPECTION">Inspection</option>
+                                    <option value="OTHER">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="serviceDate" class="form-label">Service Date</label>
+                                <input type="date" class="form-control" id="serviceDate" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="nextServiceDate" class="form-label">Next Service Date</label>
+                                <input type="date" class="form-control" id="nextServiceDate" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="serviceCost" class="form-label">Cost</label>
+                                <input type="number" class="form-control" id="serviceCost" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="serviceProvider" class="form-label">Service Provider</label>
+                                <input type="text" class="form-control" id="serviceProvider" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="maintenanceDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="maintenanceDescription" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="maintenanceStatus" class="form-label">Status</label>
+                            <select class="form-select" id="maintenanceStatus" required>
+                                <option value="SCHEDULED">Scheduled</option>
+                                <option value="IN_PROGRESS">In Progress</option>
+                                <option value="COMPLETED">Completed</option>
+                                <option value="CANCELLED">Cancelled</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveMaintenanceBtn">Save Record</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Maintenance Modal -->
+    <div class="modal fade" id="editMaintenanceModal" tabindex="-1" aria-labelledby="editMaintenanceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editMaintenanceModalLabel">Edit Maintenance Record</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editMaintenanceForm">
+                        <input type="hidden" id="edit-maintenance-id">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="edit-maintenanceVehicle" class="form-label">Vehicle</label>
+                                <select class="form-select" id="edit-maintenanceVehicle" required>
+                                    <option value="">Select Vehicle</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="edit-maintenanceType" class="form-label">Maintenance Type</label>
+                                <select class="form-select" id="edit-maintenanceType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="ROUTINE">Routine Service</option>
+                                    <option value="REPAIR">Repair</option>
+                                    <option value="INSPECTION">Inspection</option>
+                                    <option value="OTHER">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="edit-serviceDate" class="form-label">Service Date</label>
+                                <input type="date" class="form-control" id="edit-serviceDate" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="edit-nextServiceDate" class="form-label">Next Service Date</label>
+                                <input type="date" class="form-control" id="edit-nextServiceDate">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="edit-serviceCost" class="form-label">Cost</label>
+                                <input type="number" step="0.01" class="form-control" id="edit-serviceCost" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="edit-serviceProvider" class="form-label">Service Provider</label>
+                                <input type="text" class="form-control" id="edit-serviceProvider">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="edit-maintenanceDescription" class="form-label">Description</label>
+                                <textarea class="form-control" id="edit-maintenanceDescription" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <label for="edit-maintenanceStatus" class="form-label">Status</label>
+                                <select class="form-select" id="edit-maintenanceStatus" required>
+                                    <option value="SCHEDULED">Scheduled</option>
+                                    <option value="IN_PROGRESS">In Progress</option>
+                                    <option value="COMPLETED">Completed</option>
+                                    <option value="CANCELLED">Cancelled</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="updateMaintenanceBtn">Update Maintenance</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addUserForm">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="tel" class="form-control" id="phone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="userRole" class="form-label">Role</label>
+                            <select class="form-select" id="userRole" required>
+                                <option value="">Select Role</option>
+                                <option value="ADMIN">Admin</option>
+                                <option value="MANAGER">Manager</option>
+                                <option value="SALESPERSON">Salesperson</option>
+                                <option value="CUSTOMER">Customer</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="saveUserBtn">Save User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editUserForm">
+                        <input type="hidden" id="edit-user-id">
+                        <div class="mb-3">
+                            <label for="edit-username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="edit-username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-fullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="edit-fullName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="edit-email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-phone" class="form-label">Phone</label>
+                            <input type="tel" class="form-control" id="edit-phone">
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-userRole" class="form-label">Role</label>
+                            <select class="form-select" id="edit-userRole" required>
+                                <option value="ADMIN">Admin</option>
+                                <option value="MANAGER">Manager</option>
+                                <option value="SALESPERSON">Salesperson</option>
+                                <option value="CUSTOMER">Customer</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="updateUserBtn">Update User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>  
